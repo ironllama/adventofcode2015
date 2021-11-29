@@ -33,11 +33,11 @@ foreach ($allStringLines as $line) {
 $all_locations = array_keys($locations);
 $num_all_locations = count($all_locations);
 $all_combos = [];
-$shortest = ['path' => '', 'dist' => 0];
+$longest = ['path' => '', 'dist' => 0];
 
 function getNext($visited, $to_visit, $total)
 {
-    global $all_combos, $locations, $num_all_locations, $shortest;
+    global $all_combos, $locations, $num_all_locations, $longest;
 
     for ($i = count($to_visit) - 1; $i >= 0; --$i) {
         $new_to_visit = $to_visit;
@@ -57,8 +57,8 @@ function getNext($visited, $to_visit, $total)
 
         if (count($new_visited) === $num_all_locations) {  // If we visited all the locations...
             $all_combos[] = ['path' => $new_visited, 'dist' => $new_total];
-            if (0 === $shortest['dist'] || $shortest['dist'] > $new_total) {
-                $shortest = ['path' => $new_visited, 'dist' => $new_total];
+            if (0 === $longest['dist'] || $longest['dist'] < $new_total) {
+                $longest = ['path' => $new_visited, 'dist' => $new_total];
             }
         }
     }
@@ -66,5 +66,5 @@ function getNext($visited, $to_visit, $total)
 getNext([], $all_locations, 0);
 
 echo 'ALL: '.count($all_combos).PHP_EOL;
-echo 'SHORTEST:';
-print_r($shortest);
+echo 'LONGEST:';
+print_r($longest);
