@@ -47,8 +47,22 @@ function get_another($visited, $score)
 get_another([], 0);
 
 // print_r($storage_goal_combo);
+$min_size = 0;
+$min_combos = [];
 foreach ($storage_goal_combo as $this_combo) {
+    $this_size = count($this_combo);
+    if (0 === $min_size || $this_size < $min_size) {
+        $min_size = $this_size;
+        $min_combos = [$this_combo];
+    } elseif ($this_size === $min_size) {
+        $min_combos[] = $this_combo;
+    }
+}
+
+foreach ($min_combos as $this_combo) {
     $translated = array_map(fn ($input) => $allIntLines[$input], $this_combo);
     echo implode(' -> ', $translated).PHP_EOL;
 }
-echo 'NUM: '.count($storage_goal_combo).PHP_EOL;
+
+echo "SIZE: ${min_size}".PHP_EOL;
+echo 'NUM: '.count($min_combos).PHP_EOL;
