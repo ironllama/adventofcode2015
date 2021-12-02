@@ -49,9 +49,10 @@ function getNext($visited, $to_visit, $total)
             $new_total += intval($locations[$last_visited][$curr]);
         }
 
-        if (count($to_visit) > 0) {
-            $new_visited = $visited;
-            $new_visited[] = $curr;
+        $new_visited = $visited;
+        $new_visited[] = $curr;
+
+        if (count($new_to_visit) > 0) {
             getNext($new_visited, $new_to_visit, $new_total);
         }  // If there are more in the to-visit basket, keep going.
 
