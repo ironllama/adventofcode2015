@@ -81,15 +81,18 @@ function next_stage($last_state)
 $allStringLines = explode("\n", file_get_contents('18.in.txt'));
 $reps = 100;
 
+// Turn on corners.
 $allStringLines[0] = preg_replace('/^.|.$/', '#', $allStringLines[0]);
 $allStringLines[count($allStringLines) - 1] = preg_replace('/^.|.$/', '#', $allStringLines[count($allStringLines) - 1]);
 // print_r($allStringLines);
 
+// Go through evolutions.
 $new_stage = $allStringLines;
 foreach (range(1, $reps) as $i) {
     $new_stage = next_stage($new_stage);
 }
 
+// Count lights on.
 $total_on = 0;
 foreach ($new_stage as $line) {
     foreach (str_split($line) as $point) {
@@ -98,5 +101,7 @@ foreach ($new_stage as $line) {
         }
     }
 }
+
+// Print out results.
 print_r($new_stage);
 echo "TOTAL ON: ${total_on}".PHP_EOL;
